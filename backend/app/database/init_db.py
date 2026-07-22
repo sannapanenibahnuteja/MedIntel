@@ -1,10 +1,14 @@
-from app.database.connection import engine, Base
+"""
+Database schema is managed by Alembic.
 
-# Import all models here
-from app.models.patient import Patient
+Useful commands:
 
-print("Creating database tables...")
+Generate migration:
+uv run alembic revision --autogenerate -m "Description"
 
-Base.metadata.create_all(bind=engine)
+Apply migration:
+uv run alembic upgrade head
 
-print("Patients table created successfully!")
+Check current version:
+uv run alembic current
+"""
