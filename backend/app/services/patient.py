@@ -1,44 +1,112 @@
+from fastapi import HTTPException, status
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from app.models.patient import Patient
-from app.schemas.patient import PatientCreate
+from app.repositories.patient import PatientRepository
+from app.schemas.patient import PatientCreate, PatientUpdate
 
 
-def create_patient(db: Session, patient: PatientCreate):
+class PatientService:
+    def __init__(self, db: Session):
+        self.repo = PatientRepository(db)
 
-    db_patient = Patient(**patient.model_dump())
+    def create_patient(self, patient: PatientCreate):
+        # Check duplicate email
+        if patient.email:
+            existing = self.repo.get_by_email(patient.email)
+            if existing:
+                raise HTTPException(
+                    status_code=status.HTTP_409_CONFLICT,
+                    detail="Email already exists."
+                )
 
-    db.add(db_patient)
+        new_patient = Patient(**patient.model_dump())
 
-    db.commit()
+        try:
+            return self.repo.create(new_patient)
+        except IntegrityError:
+            raise HTTPException(
+                status_code=status.HTTP_409_CONFLICT,
+                detail="Email already exists."
+            )
 
-    db.refresh(db_patient)
+    def get_all_patients(
+        self,
+        skip: int = 0,
+        limit: int = 10,
+        search: str | None = None,
+        sort_by: str = "id",
+        order: str = "asc",
+    ):
+        return self.repo.get_all(
+            skip=skip,
+            limit=limit,
+            search=search,
+            sort_by=sort_by,
+            order=order,
+        )
 
-    return db_patient
+    def get_patient(self, patient_id: int):
+        patient = self.repo.get_by_id(patient_id)
 
+        if not patient:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Patient not found."
+            )
 
-def get_patients(db: Session):
+        return patient
 
-    return db.query(Patient).all()
+    def update_patient(
+        self,
+        patient_id: int,
+        patient_update: PatientUpdate,
+    ):
+        patient = self.repo.get_by_id(patient_id)
 
+        if not patient:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Patient not found."
+            )
 
-def get_patient_by_id(db: Session, patient_id: int):
+        update_data = patient_update.model_dump(exclude_unset=True)
 
-    return db.query(Patient).filter(
-        Patient.id == patient_id
-    ).first()
+        # Duplicate email check
+        if "email" in update_data:
+            existing = self.repo.get_by_email(update_data["email"])
 
+            if existing and existing.id != patient_id:
+                raise HTTPException(
+                    status_code=status.HTTP_409_CONFLICT,
+                    detail="Email already exists."
+                )
 
-def delete_patient(db: Session, patient_id: int):
+        for key, value in update_data.items():
+            setattr(patient, key, value)
 
-    patient = db.query(Patient).filter(
-        Patient.id == patient_id
-    ).first()
+        try:
+            self.repo.update()
+        except IntegrityError:
+            raise HTTPException(
+                status_code=status.HTTP_409_CONFLICT,
+                detail="Email already exists."
+            )
 
-    if patient:
+        return patient
 
-        db.delete(patient)
+    def delete_patient(self, patient_id: int):
+        patient = self.repo.get_by_id(patient_id)
 
-        db.commit()
+        if not patient:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Patient not found."
+            )
 
-    return patient
+        self.repo.delete(patient)
+
+        return {
+            "message": "Patient deleted successfully."
+        }
