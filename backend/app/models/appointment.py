@@ -1,13 +1,7 @@
-from sqlalchemy import (
-    Column,
-    Date,
-    ForeignKey,
-    Integer,
-    String,
-    Time,
-)
+from sqlalchemy import Column, Date, ForeignKey, Integer, String, Time
 from sqlalchemy.orm import relationship
 
+from app.constants.status import AppointmentStatus
 from app.database.connection import Base
 
 
@@ -28,13 +22,20 @@ class Appointment(Base):
         nullable=False,
     )
 
-    appointment_date = Column(Date, nullable=False)
+    appointment_date = Column(
+        Date,
+        nullable=False,
+    )
 
-    appointment_time = Column(Time, nullable=False)
+    appointment_time = Column(
+        Time,
+        nullable=False,
+    )
 
     status = Column(
         String,
-        default="Scheduled",
+        default=AppointmentStatus.SCHEDULED.value,
+        nullable=False,
     )
 
     notes = Column(String)
