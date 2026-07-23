@@ -2,6 +2,7 @@ from fastapi import Depends, FastAPI
 
 from app.auth.dependencies import get_current_user
 from app.models.user import User
+from app.routers.appointment import router as appointment_router
 from app.routers.auth import router as auth_router
 from app.routers.doctor import router as doctor_router
 from app.routers.patient import router as patient_router
@@ -34,3 +35,4 @@ def profile(
 app.include_router(auth_router)
 app.include_router(patient_router)
 app.include_router(doctor_router)
+app.include_router(appointment_router)

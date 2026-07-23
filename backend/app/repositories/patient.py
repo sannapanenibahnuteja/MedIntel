@@ -1,38 +1,40 @@
 from typing import Optional
 
-from sqlalchemy.orm import Session
+from sqlalchemy import or_
 
 from app.models.patient import Patient
+from app.repositories.base import BaseRepository
 
 
-class PatientRepository:
-    def __init__(self, db: Session):
-        self.db = db
+class PatientRepository(BaseRepository[Patient]):
+    def __init__(self, db):
+        super().__init__(db, Patient)
 
-    def create(self, patient: Patient) -> Patient:
-        self.db.add(patient)
-        self.db.commit()
-        self.db.refresh(patient)
-        return patient
+    def get_by_email(self, email: str):
+        return (
+            self.db.query(Patient)
+            .filter(Patient.email == email)
+            .first()
+        )
 
-    def get_all(
+    def search(
         self,
+        search: Optional[str] = None,
         skip: int = 0,
         limit: int = 10,
-        search: Optional[str] = None,
         sort_by: str = "id",
         order: str = "asc",
     ):
         query = self.db.query(Patient)
 
         if search:
-            search = f"%{search}%"
-
             query = query.filter(
-                (Patient.first_name.ilike(search))
-                | (Patient.last_name.ilike(search))
-                | (Patient.email.ilike(search))
-                | (Patient.disease.ilike(search))
+                or_(
+                    Patient.first_name.ilike(f"%{search}%"),
+                    Patient.last_name.ilike(f"%{search}%"),
+                    Patient.email.ilike(f"%{search}%"),
+                    Patient.disease.ilike(f"%{search}%"),
+                )
             )
 
         allowed_sort_fields = {
@@ -51,24 +53,3 @@ class PatientRepository:
             query = query.order_by(column.asc())
 
         return query.offset(skip).limit(limit).all()
-
-    def get_by_id(self, patient_id: int):
-        return (
-            self.db.query(Patient)
-            .filter(Patient.id == patient_id)
-            .first()
-        )
-
-    def get_by_email(self, email: str):
-        return (
-            self.db.query(Patient)
-            .filter(Patient.email == email)
-            .first()
-        )
-
-    def update(self):
-        self.db.commit()
-
-    def delete(self, patient: Patient):
-        self.db.delete(patient)
-        self.db.commit()
