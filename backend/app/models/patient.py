@@ -10,6 +10,7 @@ class Patient(Base):
     id = Column(Integer, primary_key=True, index=True)
 
     first_name = Column(String, nullable=False)
+
     last_name = Column(String, nullable=False)
 
     age = Column(Integer, nullable=False)
@@ -28,6 +29,12 @@ class Patient(Base):
 
     appointments = relationship(
         "Appointment",
+        back_populates="patient",
+        cascade="all, delete",
+    )
+
+    medical_records = relationship(
+        "MedicalRecord",
         back_populates="patient",
         cascade="all, delete",
     )

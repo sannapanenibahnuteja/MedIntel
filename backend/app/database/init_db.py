@@ -1,14 +1,14 @@
-"""
-Database schema is managed by Alembic.
+from app.database.connection import Base, engine
 
-Useful commands:
+# Import every model
+from app.models.user import User
+from app.models.patient import Patient
+from app.models.doctor import Doctor
+from app.models.appointment import Appointment
+from app.models.medical_record import MedicalRecord
 
-Generate migration:
-uv run alembic revision --autogenerate -m "Description"
+print("Creating database tables...")
 
-Apply migration:
-uv run alembic upgrade head
+Base.metadata.create_all(bind=engine)
 
-Check current version:
-uv run alembic current
-"""
+print("Database initialized successfully!")

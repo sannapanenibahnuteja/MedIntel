@@ -49,3 +49,9 @@ class Doctor(Base):
         back_populates="doctor",
         cascade="all, delete",
     )
+
+    medical_records = relationship(
+        "MedicalRecord",
+        back_populates="doctor",
+        cascade="all, delete",
+    )

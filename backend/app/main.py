@@ -5,6 +5,7 @@ from app.models.user import User
 from app.routers.appointment import router as appointment_router
 from app.routers.auth import router as auth_router
 from app.routers.doctor import router as doctor_router
+from app.routers.medical_record import router as medical_record_router
 from app.routers.patient import router as patient_router
 
 app = FastAPI(
@@ -36,3 +37,4 @@ app.include_router(auth_router)
 app.include_router(patient_router)
 app.include_router(doctor_router)
 app.include_router(appointment_router)
+app.include_router(medical_record_router)

@@ -1,48 +1,30 @@
 from logging.config import fileConfig
-import os
-import sys
 
 from alembic import context
-from dotenv import load_dotenv
 from sqlalchemy import engine_from_config, pool
 
-# Make the app package importable
-sys.path.append(
-    os.path.abspath(
-        os.path.join(os.path.dirname(__file__), "..")
-    )
-)
+from app.config.settings import settings
+from app.database.connection import Base
 
-# Load environment variables
-load_dotenv()
+# Import ALL models here so Alembic can detect them
+from app.models.user import User
+from app.models.patient import Patient
+from app.models.doctor import Doctor
+from app.models.appointment import Appointment
+from app.models.medical_record import MedicalRecord
 
-# Alembic Config
 config = context.config
 
-database_url = os.getenv("DATABASE_URL")
-
-if not database_url:
-    raise ValueError("DATABASE_URL not found in .env")
-
-# Escape % characters (e.g. %40 in passwords)
+# Use database URL from .env
 config.set_main_option(
     "sqlalchemy.url",
-    database_url.replace("%", "%%")
+    settings.DATABASE_URL.replace("%", "%%"),
 )
 
-# Configure logging
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
-# Import SQLAlchemy Base
-from app.database.connection import Base
-
-# Import all models
-import app.models.user
-import app.models.patient
-import app.models.doctor
-import app.models.appointment
-
+# Tell Alembic about all SQLAlchemy models
 target_metadata = Base.metadata
 
 
@@ -73,6 +55,7 @@ def run_migrations_online() -> None:
     )
 
     with connectable.connect() as connection:
+
         context.configure(
             connection=connection,
             target_metadata=target_metadata,

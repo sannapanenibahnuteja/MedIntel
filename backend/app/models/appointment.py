@@ -49,3 +49,10 @@ class Appointment(Base):
         "Doctor",
         back_populates="appointments",
     )
+
+    medical_record = relationship(
+        "MedicalRecord",
+        back_populates="appointment",
+        uselist=False,
+        cascade="all, delete",
+    )
