@@ -17,11 +17,11 @@ class PatientRepository(BaseRepository[Patient]):
             .first()
         )
 
-    def search(
+    def get_all(
         self,
-        search: Optional[str] = None,
         skip: int = 0,
         limit: int = 10,
+        search: Optional[str] = None,
         sort_by: str = "id",
         order: str = "asc",
     ):

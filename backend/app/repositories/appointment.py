@@ -1,5 +1,7 @@
 from datetime import date, time
+from typing import Optional
 
+from sqlalchemy import or_
 from sqlalchemy.orm import Session
 
 from app.models.appointment import Appointment
@@ -30,9 +32,36 @@ class AppointmentRepository(BaseRepository[Appointment]):
         self,
         skip: int = 0,
         limit: int = 10,
+        search: Optional[str] = None,
+        sort_by: str = "id",
+        order: str = "asc",
     ):
+        query = self.db.query(Appointment)
+
+        if search:
+            query = query.filter(
+                or_(
+                    Appointment.status.ilike(f"%{search}%"),
+                    Appointment.notes.ilike(f"%{search}%"),
+                )
+            )
+
+        allowed_sort_fields = {
+            "id": Appointment.id,
+            "appointment_date": Appointment.appointment_date,
+            "appointment_time": Appointment.appointment_time,
+            "status": Appointment.status,
+        }
+
+        column = allowed_sort_fields.get(sort_by, Appointment.id)
+
+        if order.lower() == "desc":
+            query = query.order_by(column.desc())
+        else:
+            query = query.order_by(column.asc())
+
         return (
-            self.db.query(Appointment)
+            query
             .offset(skip)
             .limit(limit)
             .all()
