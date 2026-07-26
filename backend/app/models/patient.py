@@ -1,4 +1,6 @@
-from sqlalchemy import Column, Integer, String, Float
+from sqlalchemy import Column, Float, Integer, String
+from sqlalchemy.orm import relationship
+
 from app.database.connection import Base
 
 
@@ -24,3 +26,15 @@ class Patient(Base):
     email = Column(String, unique=True)
 
     height = Column(Float)
+
+    appointments = relationship(
+        "Appointment",
+        back_populates="patient",
+        cascade="all, delete",
+    )
+
+    medical_records = relationship(
+        "MedicalRecord",
+        back_populates="patient",
+        cascade="all, delete",
+    )
