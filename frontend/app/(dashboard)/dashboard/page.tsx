@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 
 import { getDashboardStats } from "@/lib/dashboard";
+import DashboardCharts from "@/components/DashboardCharts";
 
 export default function Dashboard() {
   const [stats, setStats] = useState({
@@ -231,6 +232,14 @@ export default function Dashboard() {
         </div>
 
       </div>
+      <div className="mt-10">
+  <DashboardCharts
+    patients={stats.patients}
+    doctors={stats.doctors}
+    appointments={stats.appointments}
+    medicalRecords={stats.medical_records}
+  />
+</div>
 
     </div>
   );
