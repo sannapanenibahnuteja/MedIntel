@@ -1,3 +1,10 @@
+# Screenshots
+<img width="1532" height="1598" alt="patients" src="https://github.com/user-attachments/assets/da6cf70d-5204-4597-8f64-09ea14866c5f" />
+<img width="1532" height="1598" alt="medical-records" src="https://github.com/user-attachments/assets/eb6d0e43-d54d-4562-ae0f-725d0bd0750e" />
+<img width="1532" height="1598" alt="login" src="https://github.com/user-attachments/assets/6a42f845-1a2b-4949-9779-fdfb9a7df932" />
+<img width="1532" height="1598" alt="doctors" src="https://github.com/user-attachments/assets/a6680f4d-8694-4615-b5b5-a8c68521b1b7" />
+<img width="1532" height="1598" alt="dashboard" src="https://github.com/user-attachments/assets/70fd3656-5ac1-49a2-b1f6-d806c2b5133a" />
+<img width="1532" height="1598" alt="appointments" src="https://github.com/user-attachments/assets/6ebffbb8-25f2-43ca-85a6-c1748d2e1803" />
 # 🏥 MedIntel – Hospital Management System
 
 A production-ready **Hospital Management System** built using **FastAPI**, **Next.js**, and **PostgreSQL**. MedIntel provides secure authentication and an intuitive interface for managing patients, doctors, appointments, and medical records.
