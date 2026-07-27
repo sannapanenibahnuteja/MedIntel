@@ -1,77 +1,74 @@
 # 🏥 MedIntel – Hospital Management System
 
-A modern **Hospital Management System** built with **FastAPI**, **Next.js**, **PostgreSQL**, and **JWT Authentication**. The application provides a secure platform for managing patients, doctors, appointments, and medical records through an intuitive web interface.
+A production-ready **Hospital Management System** built using **FastAPI**, **Next.js**, and **PostgreSQL**. MedIntel provides secure authentication and an intuitive interface for managing patients, doctors, appointments, and medical records.
 
 ---
 
 # 🌐 Live Demo
 
-### Frontend
+### 🖥 Frontend
 https://med-intel-neon.vercel.app
 
-### Backend API
+### ⚙️ Backend API
 https://medintel-phhj.onrender.com
 
-### API Documentation
+### 📄 API Documentation
 https://medintel-phhj.onrender.com/docs
 
 ---
 
-# 📸 Preview
+# 🚀 Features
 
-> Add screenshots here after uploading them to GitHub.
-
-- Login Page
-- Dashboard
-- Patients
-- Doctors
-- Appointments
-- Medical Records
-
----
-
-# ✨ Features
-
-## Authentication
+## 🔐 Authentication
 
 - Secure JWT Authentication
 - Argon2 Password Hashing
-- Protected API Routes
 - User Login
+- Protected API Routes
 
-## Patient Management
+---
 
-- Add Patients
+## 👨‍⚕️ Doctor Management
+
+- Add Doctor
+- View Doctors
+- Edit Doctor Information
+- Delete Doctor
+
+---
+
+## 🧑 Patient Management
+
+- Add Patient
 - View Patients
 - Update Patient Details
-- Delete Patients
+- Delete Patient
 
-## Doctor Management
+---
 
-- Add Doctors
-- View Doctors
-- Update Doctor Information
-- Delete Doctors
-
-## Appointment Management
+## 📅 Appointment Management
 
 - Schedule Appointments
 - View Appointments
-- Update Appointments
+- Edit Appointments
 - Delete Appointments
 
-## Medical Records
+---
+
+## 📋 Medical Records
 
 - Create Medical Records
-- View Medical History
+- View Medical Records
 - Update Records
 - Delete Records
 
-## Dashboard
+---
 
-- Centralized Dashboard
-- Easy Navigation
-- Modern User Interface
+## 📊 Dashboard
+
+- Clean Modern Interface
+- Centralized Navigation
+- Responsive Layout
 
 ---
 
@@ -146,20 +143,20 @@ MedIntel
 # 🔐 Authentication Flow
 
 1. User enters email and password.
-2. FastAPI verifies credentials.
+2. FastAPI verifies the credentials.
 3. Password is validated using Argon2.
-4. JWT Access Token is generated.
+4. A JWT Access Token is generated.
 5. Token is stored in Local Storage.
-6. Protected API endpoints require a valid JWT.
+6. Protected endpoints require a valid JWT.
 
 ---
 
-# 🚀 Installation
+# 🚀 Getting Started
 
-## Clone Repository
+## Clone the Repository
 
 ```bash
-git clone https://github.com/YOUR_GITHUB_USERNAME/MedIntel.git
+git clone https://github.com/sannapanenibahnuteja/MedIntel.git
 ```
 
 ---
@@ -176,9 +173,9 @@ Create a virtual environment
 python -m venv backend
 ```
 
-Activate it
+Activate the environment
 
-Windows
+### Windows
 
 ```bash
 backend\Scripts\activate
@@ -218,9 +215,9 @@ npm run dev
 
 ---
 
-# ⚙ Environment Variables
+# ⚙️ Environment Variables
 
-Backend `.env`
+Create a `.env` file inside the backend folder.
 
 ```env
 DATABASE_URL=YOUR_DATABASE_URL
@@ -236,9 +233,9 @@ ACCESS_TOKEN_EXPIRE_MINUTES=30
 
 # 🗄 Database
 
-The project uses **PostgreSQL** hosted on **Neon**.
+MedIntel uses **PostgreSQL** hosted on **Neon**.
 
-Main entities:
+Database entities include:
 
 - Users
 - Patients
@@ -252,62 +249,84 @@ Main entities:
 
 ## Authentication
 
-- POST `/auth/register`
-- POST `/auth/login`
+| Method | Endpoint |
+|---------|----------|
+| POST | `/auth/register` |
+| POST | `/auth/login` |
 
-## Patients
+### Patients
 
-- GET `/patients`
-- POST `/patients`
-- PUT `/patients/{id}`
-- DELETE `/patients/{id}`
+| Method | Endpoint |
+|---------|----------|
+| GET | `/patients` |
+| POST | `/patients` |
+| PUT | `/patients/{id}` |
+| DELETE | `/patients/{id}` |
 
-## Doctors
+### Doctors
 
-- GET `/doctors`
-- POST `/doctors`
-- PUT `/doctors/{id}`
-- DELETE `/doctors/{id}`
+| Method | Endpoint |
+|---------|----------|
+| GET | `/doctors` |
+| POST | `/doctors` |
+| PUT | `/doctors/{id}` |
+| DELETE | `/doctors/{id}` |
 
-## Appointments
+### Appointments
 
-- GET `/appointments`
-- POST `/appointments`
-- PUT `/appointments/{id}`
-- DELETE `/appointments/{id}`
+| Method | Endpoint |
+|---------|----------|
+| GET | `/appointments` |
+| POST | `/appointments` |
+| PUT | `/appointments/{id}` |
+| DELETE | `/appointments/{id}` |
 
-## Medical Records
+### Medical Records
 
-- GET `/medical-records`
-- POST `/medical-records`
-- PUT `/medical-records/{id}`
-- DELETE `/medical-records/{id}`
+| Method | Endpoint |
+|---------|----------|
+| GET | `/medical-records` |
+| POST | `/medical-records` |
+| PUT | `/medical-records/{id}` |
+| DELETE | `/medical-records/{id}` |
 
 ---
 
 # 🔒 Security
 
 - JWT Authentication
-- Password Hashing using Argon2
+- Argon2 Password Hashing
 - CORS Protection
-- Environment Variables
 - SQLAlchemy ORM
+- Environment Variables
 - Input Validation using Pydantic
+
+---
+
+# 📸 Screenshots
+
+> Add screenshots of the following pages after uploading them to GitHub.
+
+- Login Page
+- Dashboard
+- Patient Management
+- Doctor Management
+- Appointment Management
+- Medical Records
 
 ---
 
 # 🎯 Future Improvements
 
-- Email Notifications
 - AI Diagnosis Assistant
 - AI Medical Chatbot
-- PDF Report Generation
-- Role-Based Access Control
-- File Uploads
-- Medical Image Storage
-- Analytics Dashboard
-- Audit Logs
+- Email Notifications
 - Appointment Reminders
+- PDF Report Generation
+- Medical Image Uploads
+- Analytics Dashboard
+- Role-Based Access Control
+- Audit Logs
 
 ---
 
@@ -317,10 +336,32 @@ Main entities:
 
 B.Tech – Artificial Intelligence & Machine Learning
 
+GitHub: https://github.com/sannapanenibahnuteja
+
 ---
 
-# ⭐ Support
+# ⭐ Show Your Support
 
-If you like this project, consider giving it a **⭐ Star** on GitHub.
+If you found this project useful, please consider giving it a **⭐ Star** on GitHub.
 
-It helps others discover the project and motivates future development.
+It helps others discover the project and supports future development.
+
+---
+
+## 📌 Project Status
+
+✅ Completed
+
+✔ Frontend deployed on Vercel
+
+✔ Backend deployed on Render
+
+✔ PostgreSQL database hosted on Neon
+
+✔ JWT Authentication implemented
+
+✔ CRUD operations completed
+
+✔ Production deployment successful
+
+✔ Fully tested and functional
